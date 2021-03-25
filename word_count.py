@@ -33,4 +33,12 @@ def word_count(text):
     words = word_split(text)
     return len(words)
 
+def char_count(text):
+    count = 0
+    for ch in text:
+        if ch not in seperators:
+            count += 1
+    return count
+
 print(word_count(test_string))
+print(char_count(test_string))
