@@ -36,7 +36,7 @@ def word_count(text):
 def char_count(text):
     count = 0
     for ch in text:
-        #if ch not in seperators:
+        if ch not in seperators:
             count += 1
     return count
 
@@ -47,6 +47,6 @@ def line_count(text):
             count += 1
     return count
 
-print(word_count(test_string))
-print(char_count(test_string))
-print(line_count(test_string))
+print(f"Words count: {word_count(test_string)}" )
+print(f"Characters count: {char_count(test_string)}" )
+print(f"Lines count: {line_count(test_string)}" )
