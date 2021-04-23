@@ -25,6 +25,20 @@ def find_sep_index(text):
             return i
     return None
 
+def has_new_line(text):
+    for i in text:
+        if i == "\n":
+            return True
+    return False
+
+def count_new_line(text):
+    count = 0
+    length = len(text)
+    for i in range(length):
+        if text[i] == "\n":
+            count += 1
+    return count
+
 def word_split(text):
     elements = []
     if not text:
@@ -89,9 +103,11 @@ def char_count(text):
     return count
 
 def line_count(text):
-    count = 0
-    for ch in text:
-        if ch == "\n":
-            count += 1
-    return count
+    if not text:
+        return 0
+    if not has_new_line(text):
+        return 1
+    else:
+        count = count_new_line(text) + 1
+        return count
 
