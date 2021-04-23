@@ -6,7 +6,7 @@ class TestWordMethods(unittest.TestCase):
     '''def get_input(word):
         return input(word)'''
 
-    def test_count_no_word(self):
+    '''def test_count_no_word(self):
         self.count = word_count.word_count("")
         self.assertEqual(self.count, 0)
 
@@ -50,7 +50,7 @@ class TestWordMethods(unittest.TestCase):
         self.count = word_count.word_count("abc abc")
         self.assertEqual(self.count, 1)
 
-'''class TestCharMethods(unittest.TestCase):
+class TestCharMethods(unittest.TestCase):
     def test_count_no_char(self):
         self.count = word_count.char_count("")
         self.assertEqual(self.count, 0)
@@ -69,7 +69,7 @@ class TestLineMethods(unittest.TestCase):
         self.count = word_count.line_count("abcde")
         self.assertEqual(self.count, 1)
 
-    def test_count_one_line(self):
+    def test_count_one_line_with_seperator(self):
         self.count = word_count.line_count("abcde\n")
         self.assertEqual(self.count, 1)
 
@@ -79,24 +79,24 @@ class TestLineMethods(unittest.TestCase):
 
     def test_count_lines(self):
         self.count = word_count.line_count("abcde\nfgh\n")
-        self.assertEqual(self.count, 2)
+        self.assertEqual(self.count, 2)'''
 
 class TestReplaceMethods(unittest.TestCase):
-    @patch('builtins.input')
+    @patch('builtins.input', side_effect = ['a', 'xh'])
     def test_replace_not_word(self, mock_input):
-        mock_input.side_effect = ['a', 'xh']
         self.text = word_count.word_replace("ab cd ef")
-        self.assertEqual(self.text, "ad cd ef")
+        self.assertEqual(self.text, "ab cd ef")
 
+    @patch('builtins.input', side_effect = ['ab', 'xh'])
     def test_replace_one_word(self, mock_input):
-        mock_input.side_effect = ['ab', 'xh']
         self.text = word_count.word_replace("ab cd ef")
         self.assertEqual(self.text, "xh cd ef")
 
+    @patch('builtins.input', side_effect = ['ab', 'xh'])
     def test_replace_two_words(self, mock_input):
         mock_input.side_effect = ['ab', 'xh']
         self.text = word_count.word_replace("ab cd ab")
-        self.assertEqual(self.text, "xh cd xh")'''
+        self.assertEqual(self.text, "xh cd xh")
 
 if __name__ == '__main__':
     unittest.main()
