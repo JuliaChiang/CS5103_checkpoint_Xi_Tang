@@ -1,33 +1,17 @@
-f = open("lorem_ipsum.txt","r")
-test_string = f.read()
+import config
+text = config.test_string
+chars = config.chars
+seperators = config.seperators
 
-
-capChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-lowChars = capChars.lower()
-chars = capChars + lowChars
-print(chars)
-
-seperators = [" ", "\t", "\n",".", ",", ";", ":", "'", "\"", "?", "!", ":"]
 
 def is_word(short_seqs):
-    if short_seqs[-1] in seperators:
-        return short_seqs[:-1].isalpha()
-    else:
+    if not short_seqs:
         return False
+    for i in short_seqs:
+        if i in seperators:
+            return False
+    return True
 
-def word_split(text):
-    words = []
-    word = ''
-    if not text:
-        return words
-    else:
-        for ch in text:
-            if ch not in seperators:
-                word += ch
-            elif word:
-                words.append(word)
-                word = ''
-        return words
 
 def text_break(text):
     elements = []
@@ -48,6 +32,7 @@ def word_to_string(arr):
     return ''.join(arr)
 
 def word_replace(text):
+    print(text)
     target_word = input("Replace:")
     new_word = input("Replace by:")
     arr = text_break(text)
@@ -78,9 +63,35 @@ def line_count(text):
             count += 1
     return count
 
+def has_seperators(text):
+    for i in text:
+        if i in seperators:
+            return True
+    return False
 
+def find_sep_index(text):
+    length = len(text)
+    for i in range(length):
+        if text[i] in seperators:
+            return i
+    return None
 
-print(f"Words count: {word_count(test_string)}" )
-print(f"Characters count: {char_count(test_string)}" )
-print(f"Lines count: {line_count(test_string)}" )
-print(f"New text: {word_replace(test_string)}" )
+def word_split(text):
+    elements = []
+    if not text:
+        return elements
+    elif text in seperators:
+        return elements
+
+    if is_word(text):
+        elements.append(text)
+        return elements
+    elif has_seperators(text):
+        sep_index = find_sep_index(text)
+        if sep_index == 0:
+            return word_split(text[1:])
+        if sep_index == len(text)-1:
+            return word_split(text[:-1])
+        else:
+            return word_split(text[:sep_index])+word_split(text[sep_index+1:])
+
