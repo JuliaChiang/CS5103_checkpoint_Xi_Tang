@@ -12,21 +12,53 @@ def is_word(short_seqs):
             return False
     return True
 
+def has_seperators(text):
+    for i in text:
+        if i in seperators:
+            return True
+    return False
+
+def find_sep_index(text):
+    length = len(text)
+    for i in range(length):
+        if text[i] in seperators:
+            return i
+    return None
+
+def word_split(text):
+    elements = []
+    if not text:
+        return elements
+    elif text in seperators:
+        return elements
+
+    if is_word(text):
+        elements.append(text)
+        return elements
+    elif has_seperators(text):
+        sep_index = find_sep_index(text)
+        if sep_index == 0:
+            return word_split(text[1:])
+        if sep_index == len(text)-1:
+            return word_split(text[:-1])
+        else:
+            return word_split(text[:sep_index])+word_split(text[sep_index+1:])
 
 def text_break(text):
     elements = []
-    word = ''
     if not text:
         return elements
-    else:
-        for ch in text:
-            if ch not in seperators:
-                word += ch
-            elif word:
-                elements.append(word)
-                elements.append(ch)
-                word = ''
+    elif is_word(text):
+        elements.append(text)
         return elements
+    elif text in seperators:
+        elements.append(text)
+        return elements
+    elif has_seperators(text):
+        sep_index = find_sep_index(text)
+        front = text_break(text[:sep_index])
+        tail = text_break(text[sep_index+1:])
+        return front + [text[sep_index]] + tail
 
 def word_to_string(arr):
     return ''.join(arr)
@@ -62,36 +94,4 @@ def line_count(text):
         if ch == "\n":
             count += 1
     return count
-
-def has_seperators(text):
-    for i in text:
-        if i in seperators:
-            return True
-    return False
-
-def find_sep_index(text):
-    length = len(text)
-    for i in range(length):
-        if text[i] in seperators:
-            return i
-    return None
-
-def word_split(text):
-    elements = []
-    if not text:
-        return elements
-    elif text in seperators:
-        return elements
-
-    if is_word(text):
-        elements.append(text)
-        return elements
-    elif has_seperators(text):
-        sep_index = find_sep_index(text)
-        if sep_index == 0:
-            return word_split(text[1:])
-        if sep_index == len(text)-1:
-            return word_split(text[:-1])
-        else:
-            return word_split(text[:sep_index])+word_split(text[sep_index+1:])
 
