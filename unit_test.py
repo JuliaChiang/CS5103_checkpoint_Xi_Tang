@@ -6,7 +6,7 @@ class TestWordMethods(unittest.TestCase):
     '''def get_input(word):
         return input(word)'''
 
-    '''def test_count_no_word(self):
+    def test_count_no_word(self):
         self.count = word_count.word_count("")
         self.assertEqual(self.count, 0)
 
@@ -71,15 +71,15 @@ class TestLineMethods(unittest.TestCase):
 
     def test_count_one_line_with_seperator(self):
         self.count = word_count.line_count("abcde\n")
-        self.assertEqual(self.count, 1)
+        self.assertEqual(self.count, 2)
 
     def test_count_new_line(self):
         self.count = word_count.line_count("\n")
-        self.assertEqual(self.count, 1)
+        self.assertEqual(self.count, 2)
 
     def test_count_lines(self):
         self.count = word_count.line_count("abcde\nfgh\n")
-        self.assertEqual(self.count, 2)'''
+        self.assertEqual(self.count, 3)
 
 class TestReplaceMethods(unittest.TestCase):
     @patch('builtins.input', side_effect = ['a', 'xh'])
